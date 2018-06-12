@@ -1,0 +1,9 @@
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/hid_test.dir
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/switch_test.dir
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/switch_scpi.dir
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/two_usrp.dir
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/one_usrp.dir
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/switch_usrp.dir
+/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles/oscilloskop.dir
