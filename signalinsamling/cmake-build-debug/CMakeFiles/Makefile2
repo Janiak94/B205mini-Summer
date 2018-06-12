@@ -60,6 +60,43 @@ CMAKE_SOURCE_DIR = /Users/Jens/git/B205mini-Summer/signalinsamling
 CMAKE_BINARY_DIR = /Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug
 
 #=============================================================================
+# Target rules for target CMakeFiles/temperature.dir
+
+# All Build rule for target.
+CMakeFiles/temperature.dir/all:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/depend
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles --progress-num=19,20,21 "Built target temperature"
+.PHONY : CMakeFiles/temperature.dir/all
+
+# Include target in all.
+all: CMakeFiles/temperature.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/temperature.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/temperature.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/temperature.dir/rule
+
+# Convenience name for target.
+temperature: CMakeFiles/temperature.dir/rule
+
+.PHONY : temperature
+
+# clean rule for target.
+CMakeFiles/temperature.dir/clean:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/clean
+.PHONY : CMakeFiles/temperature.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/temperature.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/hid_test.dir
 
 # All Build rule for target.
@@ -177,7 +214,7 @@ clean: CMakeFiles/switch_scpi.dir/clean
 CMakeFiles/two_usrp.dir/all:
 	$(MAKE) -f CMakeFiles/two_usrp.dir/build.make CMakeFiles/two_usrp.dir/depend
 	$(MAKE) -f CMakeFiles/two_usrp.dir/build.make CMakeFiles/two_usrp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles --progress-num=19,20,21 "Built target two_usrp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/CMakeFiles --progress-num=22,23,24 "Built target two_usrp"
 .PHONY : CMakeFiles/two_usrp.dir/all
 
 # Include target in all.

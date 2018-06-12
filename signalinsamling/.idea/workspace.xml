@@ -8,6 +8,7 @@
       <config projectName="Project" targetName="switch_scpi" />
       <config projectName="Project" targetName="two_usrp" />
       <config projectName="Project" targetName="switch_test" />
+      <config projectName="Project" targetName="temperature" />
       <config projectName="Project" targetName="oscilloskop" />
     </generated>
   </component>
@@ -19,6 +20,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d54c07cc-cdc7-4050-a03e-ed07455fe1c0" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <ignored path="$PROJECT_DIR$/CMakeFiles/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/oscilloskop.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="194">
-              <caret line="130" column="47" lean-forward="false" selection-start-line="130" selection-start-column="47" selection-end-line="130" selection-end-column="47" />
+              <caret line="130" column="47" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
               <folding>
                 <element signature="e#693#733#0" expanded="true" />
               </folding>
@@ -45,17 +47,49 @@
         <entry file="file://$PROJECT_DIR$/util-oscilloskop.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="12" column="76" lean-forward="false" selection-start-line="12" selection-start-column="76" selection-end-line="12" selection-end-column="76" />
+              <caret line="12" column="78" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="12" selection-end-column="78" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="util-oscilloskop.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="util-oscilloskop.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/util-oscilloskop.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="362">
-              <caret line="91" column="8" lean-forward="false" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="8" />
+              <caret line="91" column="8" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="226" selection-end-column="1" />
+              <folding>
+                <element signature="e#693#730#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="temperature.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/temperature.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1184">
+              <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="util-temperature.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/util-temperature.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="78" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="11" selection-end-column="78" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="util-temperature.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/util-temperature.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="620">
+              <caret line="205" column="9" lean-forward="false" selection-start-line="205" selection-start-column="9" selection-end-line="205" selection-end-column="9" />
               <folding>
                 <element signature="e#693#730#0" expanded="true" />
               </folding>
@@ -66,8 +100,8 @@
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2084">
-              <caret line="217" column="32" lean-forward="false" selection-start-line="217" selection-start-column="32" selection-end-line="217" selection-end-column="32" />
+            <state relative-caret-position="390">
+              <caret line="88" column="45" lean-forward="false" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -83,19 +117,22 @@
       <find>md</find>
       <find>switch</find>
       <find>one_usrp</find>
-      <find>buff</find>
       <find>rx_bw</find>
+      <find>buff</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/util.hpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/build/CMakeCache.txt" />
         <option value="$PROJECT_DIR$/util-oscilloskop.hpp" />
         <option value="$PROJECT_DIR$/oscilloskop.cpp" />
         <option value="$PROJECT_DIR$/util-oscilloskop.cpp" />
+        <option value="$PROJECT_DIR$/temperature.cpp" />
+        <option value="$PROJECT_DIR$/util-temperature.hpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/util-temperature.cpp" />
       </list>
     </option>
   </component>
@@ -183,10 +220,13 @@
     <configuration name="switch_usrp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="switch_usrp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="switch_usrp">
       <envs />
     </configuration>
+    <configuration name="temperature" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="temperature" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="temperature">
+      <envs />
+    </configuration>
     <configuration name="two_usrp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project" TARGET_NAME="two_usrp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project" RUN_TARGET_NAME="two_usrp">
       <envs />
     </configuration>
-    <list size="8">
+    <list size="9">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.hid_test" />
       <item index="2" class="java.lang.String" itemvalue="Application.one_usrp" />
@@ -194,7 +234,8 @@
       <item index="4" class="java.lang.String" itemvalue="Application.switch_scpi" />
       <item index="5" class="java.lang.String" itemvalue="Application.switch_test" />
       <item index="6" class="java.lang.String" itemvalue="Application.switch_usrp" />
-      <item index="7" class="java.lang.String" itemvalue="Application.two_usrp" />
+      <item index="7" class="java.lang.String" itemvalue="Application.temperature" />
+      <item index="8" class="java.lang.String" itemvalue="Application.two_usrp" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -210,12 +251,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1528721755666</updated>
-      <workItem from="1528721756898" duration="14150000" />
+      <workItem from="1528721756898" duration="16829000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14150000" />
+    <option name="totallyTimeSpent" value="16829000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="329" y="23" width="1612" height="1177" extended-state="0" />
@@ -295,8 +336,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2084">
-          <caret line="217" column="32" lean-forward="false" selection-start-line="217" selection-start-column="32" selection-end-line="217" selection-end-column="32" />
+        <state relative-caret-position="390">
+          <caret line="88" column="45" lean-forward="false" selection-start-line="88" selection-start-column="45" selection-end-line="88" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -304,7 +345,7 @@
     <entry file="file://$PROJECT_DIR$/oscilloskop.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
-          <caret line="130" column="47" lean-forward="false" selection-start-line="130" selection-start-column="47" selection-end-line="130" selection-end-column="47" />
+          <caret line="130" column="47" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
           <folding>
             <element signature="e#693#733#0" expanded="true" />
           </folding>
@@ -314,7 +355,7 @@
     <entry file="file://$PROJECT_DIR$/util-oscilloskop.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="12" column="76" lean-forward="false" selection-start-line="12" selection-start-column="76" selection-end-line="12" selection-end-column="76" />
+          <caret line="12" column="78" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="12" selection-end-column="78" />
           <folding />
         </state>
       </provider>
@@ -322,7 +363,33 @@
     <entry file="file://$PROJECT_DIR$/util-oscilloskop.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="362">
-          <caret line="91" column="8" lean-forward="false" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="8" />
+          <caret line="91" column="8" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="226" selection-end-column="1" />
+          <folding>
+            <element signature="e#693#730#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/temperature.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1184">
+          <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util-temperature.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="78" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="11" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util-temperature.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="205" column="9" lean-forward="false" selection-start-line="205" selection-start-column="9" selection-end-line="205" selection-end-column="9" />
           <folding>
             <element signature="e#693#730#0" expanded="true" />
           </folding>

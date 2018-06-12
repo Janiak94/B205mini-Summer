@@ -60,6 +60,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/temperature.dir/DependInfo.cmake"
   "CMakeFiles/hid_test.dir/DependInfo.cmake"
   "CMakeFiles/switch_test.dir/DependInfo.cmake"
   "CMakeFiles/switch_scpi.dir/DependInfo.cmake"

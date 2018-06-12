@@ -17,6 +17,16 @@
 					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug"/>
 				<Option type="4"/>
@@ -27,11 +37,49 @@
 					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="edit_cache">
+			<Target title="temperature">
+				<Option output="/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/temperature" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug"/>
-				<Option type="4"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/opt/local/include"/>
+					<Add directory="/usr/local/include/hidapi"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 temperature"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="temperature/fast">
+				<Option output="/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/temperature" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/opt/local/include"/>
+					<Add directory="/usr/local/include/hidapi"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 temperature/fast"/>
 					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -392,6 +440,9 @@
 		<Unit filename="/Users/Jens/git/B205mini-Summer/signalinsamling/switch_usrp.cpp">
 			<Option target="switch_usrp"/>
 		</Unit>
+		<Unit filename="/Users/Jens/git/B205mini-Summer/signalinsamling/temperature.cpp">
+			<Option target="temperature"/>
+		</Unit>
 		<Unit filename="/Users/Jens/git/B205mini-Summer/signalinsamling/two_usrp.cpp">
 			<Option target="two_usrp"/>
 		</Unit>
@@ -400,6 +451,12 @@
 		</Unit>
 		<Unit filename="/Users/Jens/git/B205mini-Summer/signalinsamling/util-oscilloskop.hpp">
 			<Option target="oscilloskop"/>
+		</Unit>
+		<Unit filename="/Users/Jens/git/B205mini-Summer/signalinsamling/util-temperature.cpp">
+			<Option target="temperature"/>
+		</Unit>
+		<Unit filename="/Users/Jens/git/B205mini-Summer/signalinsamling/util-temperature.hpp">
+			<Option target="temperature"/>
 		</Unit>
 		<Unit filename="/Users/Jens/git/B205mini-Summer/signalinsamling/util.cpp">
 			<Option target="hid_test"/>

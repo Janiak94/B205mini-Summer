@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /Users/Jens/git/B205mini-Summer/signalinsamling/cmake-build-d
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Applications/IDE/CLion.app/Contents/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/Applications/IDE/CLion.app/Contents/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -109,6 +109,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named temperature
+
+# Build rule for target.
+temperature: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 temperature
+.PHONY : temperature
+
+# fast build rule for target.
+temperature/fast:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/build
+.PHONY : temperature/fast
 
 #=============================================================================
 # Target rules for targets named hid_test
@@ -363,6 +376,33 @@ switch_usrp.cpp.s:
 	$(MAKE) -f CMakeFiles/switch_usrp.dir/build.make CMakeFiles/switch_usrp.dir/switch_usrp.cpp.s
 .PHONY : switch_usrp.cpp.s
 
+temperature.o: temperature.cpp.o
+
+.PHONY : temperature.o
+
+# target to build an object file
+temperature.cpp.o:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/temperature.cpp.o
+.PHONY : temperature.cpp.o
+
+temperature.i: temperature.cpp.i
+
+.PHONY : temperature.i
+
+# target to preprocess a source file
+temperature.cpp.i:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/temperature.cpp.i
+.PHONY : temperature.cpp.i
+
+temperature.s: temperature.cpp.s
+
+.PHONY : temperature.s
+
+# target to generate assembly for a file
+temperature.cpp.s:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/temperature.cpp.s
+.PHONY : temperature.cpp.s
+
 two_usrp.o: two_usrp.cpp.o
 
 .PHONY : two_usrp.o
@@ -417,6 +457,33 @@ util-oscilloskop.cpp.s:
 	$(MAKE) -f CMakeFiles/oscilloskop.dir/build.make CMakeFiles/oscilloskop.dir/util-oscilloskop.cpp.s
 .PHONY : util-oscilloskop.cpp.s
 
+util-temperature.o: util-temperature.cpp.o
+
+.PHONY : util-temperature.o
+
+# target to build an object file
+util-temperature.cpp.o:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/util-temperature.cpp.o
+.PHONY : util-temperature.cpp.o
+
+util-temperature.i: util-temperature.cpp.i
+
+.PHONY : util-temperature.i
+
+# target to preprocess a source file
+util-temperature.cpp.i:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/util-temperature.cpp.i
+.PHONY : util-temperature.cpp.i
+
+util-temperature.s: util-temperature.cpp.s
+
+.PHONY : util-temperature.s
+
+# target to generate assembly for a file
+util-temperature.cpp.s:
+	$(MAKE) -f CMakeFiles/temperature.dir/build.make CMakeFiles/temperature.dir/util-temperature.cpp.s
+.PHONY : util-temperature.cpp.s
+
 util.o: util.cpp.o
 
 .PHONY : util.o
@@ -465,8 +532,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... temperature"
 	@echo "... hid_test"
 	@echo "... switch_test"
 	@echo "... switch_scpi"
@@ -492,12 +560,18 @@ help:
 	@echo "... switch_usrp.o"
 	@echo "... switch_usrp.i"
 	@echo "... switch_usrp.s"
+	@echo "... temperature.o"
+	@echo "... temperature.i"
+	@echo "... temperature.s"
 	@echo "... two_usrp.o"
 	@echo "... two_usrp.i"
 	@echo "... two_usrp.s"
 	@echo "... util-oscilloskop.o"
 	@echo "... util-oscilloskop.i"
 	@echo "... util-oscilloskop.s"
+	@echo "... util-temperature.o"
+	@echo "... util-temperature.i"
+	@echo "... util-temperature.s"
 	@echo "... util.o"
 	@echo "... util.i"
 	@echo "... util.s"
