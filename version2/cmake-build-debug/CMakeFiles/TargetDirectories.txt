@@ -1,0 +1,3 @@
+/Users/Jens/git/B205mini-Summer/version2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/Jens/git/B205mini-Summer/version2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/Jens/git/B205mini-Summer/version2/cmake-build-debug/CMakeFiles/one_usrp.dir
