@@ -31,6 +31,8 @@ namespace po = boost::program_options;
 
 void startup(uhd::usrp::multi_usrp::sptr &usrp_device, int argc, char *argv[]){
 
+    usrp_device = uhd::usrp::multi_usrp::make(uhd::device_addr_t());
+
     //transmit & receive variables set by po
     double tx_gain, tx_bw;
     double rx_gain, rx_bw;
@@ -133,9 +135,11 @@ void startup(uhd::usrp::multi_usrp::sptr &usrp_device, int argc, char *argv[]){
     sensor_names = usrp_device->get_tx_sensor_names(0);
     if (std::find(sensor_names.begin(), sensor_names.end(), "lo_locked") != sensor_names.end()) {
         uhd::sensor_value_t lo_locked = usrp_device->get_tx_sensor("lo_locked",0);
-        std::cout << boost::format("Checking lock: %s ...") % lo_locked.to_pp_string() << std::endl;
+        std::cout << boost::format("Checking lock: %s ...") % lo_locked.to_pp_string() << std::endl << std::endl;
         UHD_ASSERT_THROW(lo_locked.to_bool());
     }
+
+    usrp_device->set_time_now(uhd::time_spec_t(0.0));
 
     /*TODO
      * Vill börja sända ut nonsenssignal för att "värma upp" kortet istället för zeropadding
@@ -143,36 +147,32 @@ void startup(uhd::usrp::multi_usrp::sptr &usrp_device, int argc, char *argv[]){
 
 }
 
-void recv_to_file(uhd::usrp::multi_usrp::sptr usrp_device, std::ofstream *outfile_stream){
+void recv_to_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data, std::ofstream *outfile_stream){
     // Set number of data points to get from the rx stream at one time
     size_t size_per_buffer = 5000;
     // Vector to hold data from the rx stream in the form of complex numbers (I Q)
     std::vector<std::complex<float> > buffer(size_per_buffer);
-    // fc32: complex<float>, s16: Q16 I16
-    uhd::stream_args_t stream_args("fc32", "sc16");
-    // Ptr to rx stream
-    uhd::rx_streamer::sptr rx_stream = usrp_device->get_rx_stream(stream_args);
-    // Metadata from rx stream
-    uhd::rx_metadata_t rx_metadata;
+
     uhd::stream_cmd_t stream_cmd(uhd::stream_cmd_t::STREAM_MODE_START_CONTINUOUS);
-    rx_stream->issue_stream_cmd(stream_cmd);
+    usrp_data->rx_stream->issue_stream_cmd(stream_cmd);
 
     while(not stop_signal_called){
         // Get number of samples written to buffer and fill buffer and set metadata
-        size_t num_rx_samps = rx_stream->recv(&buffer.front(), buffer.size(), rx_metadata,1.0f);
-        std::cout << "1";
-        if (rx_metadata.error_code == uhd::rx_metadata_t::ERROR_CODE_TIMEOUT){
+        size_t num_rx_samps = usrp_data->rx_stream->
+                recv(&buffer.front(), buffer.size(), usrp_data->rx_metadata,1.0f);
+        usrp_data->num_rx_samps += num_rx_samps;
+        if (usrp_data->rx_metadata.error_code == uhd::rx_metadata_t::ERROR_CODE_TIMEOUT){
             std::cout << "Timeout while streaming" << std::endl;
             continue;
         }
 
-        if(rx_metadata.error_code == uhd::rx_metadata_t::ERROR_CODE_OVERFLOW){
+        if(usrp_data->rx_metadata.error_code == uhd::rx_metadata_t::ERROR_CODE_OVERFLOW){
             std::cout << "Overflow" << std::endl;
             continue;
         }
 
-        if (rx_metadata.error_code != uhd::rx_metadata_t::ERROR_CODE_NONE) {
-            throw std::runtime_error(str(boost::format("Receiver error %s") % rx_metadata.strerror()));
+        if (usrp_data->rx_metadata.error_code != uhd::rx_metadata_t::ERROR_CODE_NONE) {
+            throw std::runtime_error(str(boost::format("Receiver error %s") % usrp_data->rx_metadata.strerror()));
         }
 
         if(outfile_stream->is_open()){
@@ -183,46 +183,47 @@ void recv_to_file(uhd::usrp::multi_usrp::sptr usrp_device, std::ofstream *outfil
     }
 }
 
-void send_from_file(uhd::usrp::multi_usrp::sptr usrp_device, std::ifstream *infile_stream){
+void send_from_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data, std::ifstream *infile_stream){
     // Set number of data points to get from the tx stream at one time
     size_t size_per_buffer = 5000;
     // Vector to hold data from the tx stream in the form of complex numbers (I Q)
     std::vector<std::complex<float> > buffer(size_per_buffer);
-    // fc32: complex<float>, s16: Q16 I16
-    uhd::stream_args_t stream_args("fc32", "sc16");
-    // Ptr to tx stream
-    uhd::tx_streamer::sptr tx_stream = usrp_device->get_tx_stream(stream_args);
-    // Metadata from tx stream
-    uhd::tx_metadata_t tx_metadata;
+
     uhd::stream_cmd_t stream_cmd(uhd::stream_cmd_t::STREAM_MODE_START_CONTINUOUS);
 
-    // Ptr to rx stream
-    uhd::rx_streamer::sptr rx_stream = usrp_device->get_rx_stream(stream_args);
-    //rx_stream->issue_stream_cmd(stream_cmd);
     bool is_recv = false;
 
     while(not stop_signal_called){
         if(not is_recv){
             std::cout << "Start streaming, to stop: ctrl + c" << std::endl << std::endl;
-        }
-        if(not is_recv){
-            //rx_stream->issue_stream_cmd(stream_cmd);
-            std::cout << "Start streaming!";
             is_recv = true;
         }
-        while(not infile_stream->eof()){
-            std::cout << "2" << std::flush;
+        while(not infile_stream->eof() and not stop_signal_called){
             // Read in data from binary as complex<float> and put in buffer vector
             infile_stream->read((char *) &buffer.front(), buffer.size() * sizeof(std::complex<float>));
             // Number of samples read from file
             size_t num_tx_samps = size_t(infile_stream->gcount() / sizeof(std::complex<float>));
-            tx_stream->send(&buffer.front(), num_tx_samps, tx_metadata);
+            usrp_data->tx_stream->send(&buffer.front(), num_tx_samps, usrp_data->tx_metadata);
+            usrp_data->num_tx_samps += num_tx_samps;
             // Start rx stream after first sent sample
         }
         // Read file from beginning
         infile_stream->clear();
         infile_stream->seekg(0, std::ios::beg);
     }
-    rx_stream->issue_stream_cmd(uhd::stream_cmd_t::STREAM_MODE_STOP_CONTINUOUS);
+    usrp_data->rx_stream->issue_stream_cmd(uhd::stream_cmd_t::STREAM_MODE_STOP_CONTINUOUS);
 
 }
+
+void send_zeropadding(uhd::usrp::multi_usrp::sptr usrp_device, Usrp_data *usrp_data){
+    size_t size_per_buffer = 1;
+
+    std::vector<std::complex<float> > buffer(size_per_buffer);
+
+    buffer.front() = std::complex<float>(0.0f, 0.0f);
+
+    for(unsigned iter = 0; iter < 10000; ++iter){
+        usrp_data->tx_stream->send(&buffer.front(),1, usrp_data->tx_metadata);
+    }
+}
+
