@@ -31,10 +31,8 @@ struct Usrp_data{
     }
 };
 
-void startup(uhd::usrp::multi_usrp::sptr &usrp_device, int argc, char *argv[]);
+void startup(uhd::usrp::multi_usrp::sptr &usrp_device, std::ifstream &infile_stream, int argc, char *argv[]);
 
 void recv_to_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data, std::ofstream *outfile_stream);
 
 void send_from_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data, std::ifstream *infile_stream);
-
-void send_zeropadding(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data);

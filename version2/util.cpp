@@ -26,10 +26,12 @@
 #include <hidapi.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <boost/assign/list_of.hpp>
+
 
 namespace po = boost::program_options;
 
-void startup(uhd::usrp::multi_usrp::sptr &usrp_device, int argc, char *argv[]){
+void startup(uhd::usrp::multi_usrp::sptr &usrp_device, std::ifstream &infile_stream, int argc, char *argv[]){
 
     usrp_device = uhd::usrp::multi_usrp::make(uhd::device_addr_t());
 
@@ -37,6 +39,7 @@ void startup(uhd::usrp::multi_usrp::sptr &usrp_device, int argc, char *argv[]){
     double tx_gain, tx_bw;
     double rx_gain, rx_bw;
     double samp_rate, freq;
+    std::string file_name;
 
     //setup the program options
     po::options_description desc("Allowed options");
@@ -48,6 +51,7 @@ void startup(uhd::usrp::multi_usrp::sptr &usrp_device, int argc, char *argv[]){
             ("rx-gain", po::value<double>(&rx_gain), "gain for the receive RF chain")
             ("tx-bw", po::value<double>(&tx_bw), "analog transmit filter bandwidth in Hz")
             ("rx-bw", po::value<double>(&rx_bw), "analog receive filter bandwidth in Hz")
+            ("file-name", po::value<std::string>(&file_name), "name of signal file")
             ;
     po::variables_map variables_map;
     po::store(po::parse_command_line(argc, argv, desc), variables_map);
@@ -139,6 +143,27 @@ void startup(uhd::usrp::multi_usrp::sptr &usrp_device, int argc, char *argv[]){
         UHD_ASSERT_THROW(lo_locked.to_bool());
     }
 
+    //Signal files
+    std::vector<std::string> files = boost::assign::list_of("constant.bin")("square.bin")("pulse.bin");
+
+    //Checking for valid file name and opening corresponding file
+    if(not variables_map.count("file-name")){
+        //Default file to open
+        infile_stream.open("constant.bin", std::ifstream::binary);
+        std::cout << "Opened default file constant.bin" << std::endl;
+    } else {
+        //Open file
+        std::cout << boost::format("Trying to open file %s") % (file_name) << std::endl;
+        if (std::find(files.begin(), files.end(), file_name) != files.end()) {
+            infile_stream.open(file_name, std::ifstream::binary);
+            std::cout << boost::format("Opened file %s") % (file_name) << std::endl;
+        } else {
+            //No file found, terminate
+            std::cout << boost::format("File %s not found \nProgram exit.\n") % (file_name) << std::endl;
+            exit (EXIT_FAILURE);
+        }
+    }
+
     usrp_device->set_time_now(uhd::time_spec_t(0.0));
 
     /*TODO
@@ -152,13 +177,17 @@ void recv_to_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data
     size_t size_per_buffer = usrp_data->rx_stream->get_max_num_samps();
     // Vector to hold data from the rx stream in the form of complex numbers (I Q)
     std::vector<std::complex<float> > buffer(size_per_buffer);
+    usrp_data->rx_metadata.start_of_burst = true;
+    usrp_data->rx_metadata.end_of_burst = false;
 
     while(not stop_signal_called){
+        // Wait for send_from_file() function to signal
         if(usrp_data->is_sending) {
             // Get number of samples written to buffer and fill buffer and set metadata
             size_t num_rx_samps = usrp_data->rx_stream->
                     recv(&buffer.front(), buffer.size(), usrp_data->rx_metadata, 0.1);
             usrp_data->is_recieving = true;
+            usrp_data->rx_metadata.start_of_burst = false;
 
             usrp_data->num_rx_samps += num_rx_samps;
             if (usrp_data->rx_metadata.error_code == uhd::rx_metadata_t::ERROR_CODE_TIMEOUT) {
@@ -182,6 +211,7 @@ void recv_to_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data
             }
         }
     }
+    usrp_data->rx_metadata.end_of_burst = true;
 }
 
 void send_from_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data, std::ifstream *infile_stream){
@@ -194,8 +224,8 @@ void send_from_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_da
     usrp_data->tx_metadata.end_of_burst = false;
 
     while(not stop_signal_called){
-        if(not usrp_data->is_recieving){
-            std::cout << "Start streaming, to stop: ctrl + c" << std::endl << std::endl;
+        if(usrp_data->tx_metadata.start_of_burst){
+            std::cout << "Start streaming, to stop: press enter" << std::endl << std::endl;
         }
         while(not infile_stream->eof() and not stop_signal_called){
             // Read in data from binary as complex<float> and put in buffer vector
@@ -207,17 +237,17 @@ void send_from_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_da
 
             //Do not use time spec för subsequent packets
             usrp_data->tx_metadata.has_time_spec = false;
-            usrp_data->tx_metadata.start_of_burst = false;
 
             usrp_data->tx_stream->send(&buffer.front(), num_tx_samps, usrp_data->tx_metadata,0.01);
             usrp_data->num_tx_samps += num_tx_samps;
 
             // Start rx stream after first sent sample
-            if(not usrp_data->is_recieving){
+            if(usrp_data->tx_metadata.start_of_burst){
                 uhd::stream_cmd_t stream_cmd(uhd::stream_cmd_t::STREAM_MODE_START_CONTINUOUS);
                 stream_cmd.time_spec = usrp_device->get_time_now();
                 usrp_data->rx_stream->issue_stream_cmd(stream_cmd);
             }
+            usrp_data->tx_metadata.start_of_burst = false;
         }
         // Read file from beginning
         infile_stream->clear();
@@ -228,16 +258,3 @@ void send_from_file(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_da
     usrp_data->rx_stream->issue_stream_cmd(uhd::stream_cmd_t::STREAM_MODE_STOP_CONTINUOUS);
 
 }
-
-void send_zeropadding(uhd::usrp::multi_usrp::sptr &usrp_device, Usrp_data *usrp_data){
-    size_t size_per_buffer = 1000;
-
-    std::vector<std::complex<float> > buffer(size_per_buffer);
-
-    for(unsigned iter = 0; iter < 2; ++iter){
-        usrp_data->tx_stream->send(&buffer.front(),size_per_buffer, usrp_data->tx_metadata);
-    }
-
-    boost::this_thread::sleep_for(boost::chrono::seconds(1));
-}
-
