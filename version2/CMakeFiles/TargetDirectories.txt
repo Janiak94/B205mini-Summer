@@ -1,0 +1,7 @@
+/Users/Jens/git/B205mini-Summer/version2/CMakeFiles/edit_cache.dir
+/Users/Jens/git/B205mini-Summer/version2/CMakeFiles/sweep_all.dir
+/Users/Jens/git/B205mini-Summer/version2/CMakeFiles/rxtest.dir
+/Users/Jens/git/B205mini-Summer/version2/CMakeFiles/rebuild_cache.dir
+/Users/Jens/git/B205mini-Summer/version2/CMakeFiles/txtest.dir
+/Users/Jens/git/B205mini-Summer/version2/CMakeFiles/sweep.dir
+/Users/Jens/git/B205mini-Summer/version2/CMakeFiles/one_usrp.dir

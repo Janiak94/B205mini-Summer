@@ -89,6 +89,9 @@
 		<Unit filename="/Users/Jens/git/B205mini-Summer/version2/one_usrp.cpp">
 			<Option target="one_usrp"/>
 		</Unit>
+		<Unit filename="/Users/Jens/git/B205mini-Summer/version2/tx_samples_from_file.cpp">
+			<Option target="one_usrp"/>
+		</Unit>
 		<Unit filename="/Users/Jens/git/B205mini-Summer/version2/util.cpp">
 			<Option target="one_usrp"/>
 		</Unit>

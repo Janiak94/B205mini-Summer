@@ -150,6 +150,33 @@ one_usrp.cpp.s:
 	$(MAKE) -f CMakeFiles/one_usrp.dir/build.make CMakeFiles/one_usrp.dir/one_usrp.cpp.s
 .PHONY : one_usrp.cpp.s
 
+tx_samples_from_file.o: tx_samples_from_file.cpp.o
+
+.PHONY : tx_samples_from_file.o
+
+# target to build an object file
+tx_samples_from_file.cpp.o:
+	$(MAKE) -f CMakeFiles/one_usrp.dir/build.make CMakeFiles/one_usrp.dir/tx_samples_from_file.cpp.o
+.PHONY : tx_samples_from_file.cpp.o
+
+tx_samples_from_file.i: tx_samples_from_file.cpp.i
+
+.PHONY : tx_samples_from_file.i
+
+# target to preprocess a source file
+tx_samples_from_file.cpp.i:
+	$(MAKE) -f CMakeFiles/one_usrp.dir/build.make CMakeFiles/one_usrp.dir/tx_samples_from_file.cpp.i
+.PHONY : tx_samples_from_file.cpp.i
+
+tx_samples_from_file.s: tx_samples_from_file.cpp.s
+
+.PHONY : tx_samples_from_file.s
+
+# target to generate assembly for a file
+tx_samples_from_file.cpp.s:
+	$(MAKE) -f CMakeFiles/one_usrp.dir/build.make CMakeFiles/one_usrp.dir/tx_samples_from_file.cpp.s
+.PHONY : tx_samples_from_file.cpp.s
+
 util.o: util.cpp.o
 
 .PHONY : util.o
@@ -189,6 +216,9 @@ help:
 	@echo "... one_usrp.o"
 	@echo "... one_usrp.i"
 	@echo "... one_usrp.s"
+	@echo "... tx_samples_from_file.o"
+	@echo "... tx_samples_from_file.i"
+	@echo "... tx_samples_from_file.s"
 	@echo "... util.o"
 	@echo "... util.i"
 	@echo "... util.s"

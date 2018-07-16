@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.9.6)
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 ### Set up build environment ##################################################
 # Choose a static or shared-library build (shared is default, and static will
@@ -81,6 +81,11 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 ### Make the executable #######################################################
 add_executable(one_usrp one_usrp.cpp util.cpp)
+#add_executable(two_usrp two_usrp.cpp util.cpp)
+add_executable(sweep sweep.cpp)
+add_executable(txtest txtest.cpp)
+add_executable(rxtest rxtest.cpp)
+add_executable(sweep_all sweep_all.cpp)
 
 
 SET(CMAKE_BUILD_TYPE "Release")
@@ -101,6 +106,103 @@ if(NOT UHD_USE_STATIC_LIBS)
 else(NOT UHD_USE_STATIC_LIBS)
     message(STATUS "Linking against static UHD library.")
     target_link_libraries(one_usrp
+            # We could use ${UHD_LIBRARIES}, but linking requires some extra flags,
+            # so we use this convenience variable provided to us
+            ${UHD_STATIC_LIB_LINK_FLAG}
+            # Also, when linking statically, we need to pull in all the deps for
+            # UHD as well, because the dependencies don't get resolved automatically
+            ${UHD_STATIC_LIB_DEPS}
+            )
+endif(NOT UHD_USE_STATIC_LIBS)
+
+
+# Shared library case: All we need to do is link against the library, and
+# anything else we need (in this case, some Boost libraries):
+#if(NOT UHD_USE_STATIC_LIBS)
+#    message(STATUS "Linking against shared UHD library.")
+#    target_link_libraries(two_usrp ${UHD_LIBRARIES} ${Boost_LIBRARIES} ${HIDAPI_LIBRARIES})
+#    # Shared library case: All we need to do is link against the library, and
+#    # anything else we need (in this case, some Boost libraries):
+#else(NOT UHD_USE_STATIC_LIBS)
+#    message(STATUS "Linking against static UHD library.")
+#    target_link_libraries(two_usrp
+#            # We could use ${UHD_LIBRARIES}, but linking requires some extra flags,
+#            # so we use this convenience variable provided to us
+#            ${UHD_STATIC_LIB_LINK_FLAG}
+#            # Also, when linking statically, we need to pull in all the deps for
+#            # UHD as well, because the dependencies don't get resolved automatically
+#            ${UHD_STATIC_LIB_DEPS}
+#            )
+#endif(NOT UHD_USE_STATIC_LIBS)
+
+
+# Shared library case: All we need to do is link against the library, and
+# anything else we need (in this case, some Boost libraries):
+if(NOT UHD_USE_STATIC_LIBS)
+    message(STATUS "Linking against shared UHD library.")
+    target_link_libraries(sweep ${UHD_LIBRARIES} ${Boost_LIBRARIES} ${HIDAPI_LIBRARIES})
+    # Shared library case: All we need to do is link against the library, and
+    # anything else we need (in this case, some Boost libraries):
+else(NOT UHD_USE_STATIC_LIBS)
+    message(STATUS "Linking against static UHD library.")
+    target_link_libraries(sweep
+            # We could use ${UHD_LIBRARIES}, but linking requires some extra flags,
+            # so we use this convenience variable provided to us
+            ${UHD_STATIC_LIB_LINK_FLAG}
+            # Also, when linking statically, we need to pull in all the deps for
+            # UHD as well, because the dependencies don't get resolved automatically
+            ${UHD_STATIC_LIB_DEPS}
+            )
+endif(NOT UHD_USE_STATIC_LIBS)
+
+# Shared library case: All we need to do is link against the library, and
+# anything else we need (in this case, some Boost libraries):
+if(NOT UHD_USE_STATIC_LIBS)
+    message(STATUS "Linking against shared UHD library.")
+    target_link_libraries(txtest ${UHD_LIBRARIES} ${Boost_LIBRARIES} ${HIDAPI_LIBRARIES})
+    # Shared library case: All we need to do is link against the library, and
+    # anything else we need (in this case, some Boost libraries):
+else(NOT UHD_USE_STATIC_LIBS)
+    message(STATUS "Linking against static UHD library.")
+    target_link_libraries(txtest
+            # We could use ${UHD_LIBRARIES}, but linking requires some extra flags,
+            # so we use this convenience variable provided to us
+            ${UHD_STATIC_LIB_LINK_FLAG}
+            # Also, when linking statically, we need to pull in all the deps for
+            # UHD as well, because the dependencies don't get resolved automatically
+            ${UHD_STATIC_LIB_DEPS}
+            )
+endif(NOT UHD_USE_STATIC_LIBS)
+
+# Shared library case: All we need to do is link against the library, and
+# anything else we need (in this case, some Boost libraries):
+if(NOT UHD_USE_STATIC_LIBS)
+    message(STATUS "Linking against shared UHD library.")
+    target_link_libraries(rxtest ${UHD_LIBRARIES} ${Boost_LIBRARIES} ${HIDAPI_LIBRARIES})
+    # Shared library case: All we need to do is link against the library, and
+    # anything else we need (in this case, some Boost libraries):
+else(NOT UHD_USE_STATIC_LIBS)
+    message(STATUS "Linking against static UHD library.")
+    target_link_libraries(rxtest
+            # We could use ${UHD_LIBRARIES}, but linking requires some extra flags,
+            # so we use this convenience variable provided to us
+            ${UHD_STATIC_LIB_LINK_FLAG}
+            # Also, when linking statically, we need to pull in all the deps for
+            # UHD as well, because the dependencies don't get resolved automatically
+            ${UHD_STATIC_LIB_DEPS}
+            )
+endif(NOT UHD_USE_STATIC_LIBS)
+
+# Shared library case: All we need to do is link against the library, and
+# anything else we need (in this case, some Boost libraries):
+if(NOT UHD_USE_STATIC_LIBS)
+    message(STATUS "Linking against shared UHD library.")
+    target_link_libraries(sweep_all ${UHD_LIBRARIES} ${Boost_LIBRARIES} ${HIDAPI_LIBRARIES})
+    # Shared library case: All we need to do is link against the library, and
+    # anything else we need (in this case, some Boost libraries):
+else(NOT UHD_USE_STATIC_LIBS)
+    message(STATUS "Linking against static UHD library.")
+    target_link_libraries(sweep_all
             # We could use ${UHD_LIBRARIES}, but linking requires some extra flags,
             # so we use this convenience variable provided to us
             ${UHD_STATIC_LIB_LINK_FLAG}
