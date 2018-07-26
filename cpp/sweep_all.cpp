@@ -154,7 +154,6 @@ int UHD_SAFE_MAIN(int argc, char *argv[]){
         usrp->set_rx_bandwidth(rx_bw);
     }
 
-    usrp->set_time_now(uhd::time_spec_t(0.0));
 
     // Set max-value of allowed tx-gain
     float max_tx_gain = 1;
@@ -191,22 +190,24 @@ int UHD_SAFE_MAIN(int argc, char *argv[]){
                         (usrp->get_tx_gain()) % (usrp->get_rx_gain());
                 usrp_datafile << boost::format("Freq\tTX-temp\tRX-temp\tRSSI\tUsrp-time\n");
 
-                for (double freq = 0.5e6; freq <= 3e6; freq += 0.1e6) {
-                    std::cout << "\r"
-                              << boost::format("TX: %.1f RX: %.1f freq: %.1f run: %i") % tx_gain % rx_gain % freq %
-                                 number << std::flush;
+                for (double freq = 0.5e9; freq <= 3e9; freq += 0.1e9) {
 
                     stop_signal_called = false;
                     std::ofstream out_file(
-                            rx_path + (boost::format("%.1f") % (freq / 1e6)).str(),
+                            rx_path + (boost::format("%.1f") % (freq / 1e9)).str(),
                             std::ofstream::binary
                     );
-                    assert(in_file.is_open());
+                    UHD_ASSERT_THROW(out_file.is_open());
 
-                    usrp->set_rx_freq(uhd::tune_request_t(freq));
-                    usrp->set_tx_freq(uhd::tune_request_t(freq));
+                    usrp->set_rx_freq(uhd::tune_request_t(freq,0));
+                    usrp->set_tx_freq(uhd::tune_request_t(freq,0));
 
                     UHD_ASSERT_THROW(lo_lock_t(usrp));
+
+                    std::cout << "\r" << std::flush <<
+                              boost::format("TX: %.1f RX: %.1f freq: %.1f run: %i ")
+                              % tx_gain % rx_gain % ((usrp->get_rx_freq()+usrp->get_tx_freq())/(2*1e6)) % number;
+
                     boost::thread_group thread_group;
                     thread_group.create_thread(boost::bind(&transmit_thread, usrp));
                     thread_group.create_thread(boost::bind(&recieve_thread, usrp, std::ref(out_file), std::ref(usrp_datafile)));
@@ -218,6 +219,6 @@ int UHD_SAFE_MAIN(int argc, char *argv[]){
             }
         }
     }
-    std::cout << "Done!" << std::endl << std::endl;
+    std::cout << std::endl << "Done!" << std::endl << std::endl;
     return EXIT_SUCCESS;
 }
